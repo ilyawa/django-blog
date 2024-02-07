@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-#ALLOWED_HOSTS = ['https://django-blog-svdv.onrender.com', 'localhost']
+#ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -92,8 +92,11 @@ DATABASES = {
     }
 }
 database_url = os.environ.get("DATABASE_URL")
-DATABASES["default"] = dj_database_url.parse(database_url)
 
+DATABASES["default"] = dj_database_url.parse(database_url)
+#DATABASES["default"] = dj_database_url.parse("postgres://dula_pipa_user:Ip76mf5E2luZ9I3RA43KsjsMnOvlawEj@dpg-cn1s3jgcmk4c73fi9t6g-a.frankfurt-postgres.render.com/dula_pipa")
+
+#postgres://dula_pipa_user:Ip76mf5E2luZ9I3RA43KsjsMnOvlawEj@dpg-cn1s3jgcmk4c73fi9t6g-a.frankfurt-postgres.render.com/dula_pipa
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
