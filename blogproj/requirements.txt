@@ -8,3 +8,4 @@ typing_extensions==4.7.0
 django-crispy-forms==1.14.0
 crispy-bootstrap4==2022.1
 pillow==10.2.0
+whitenoise==6.6.0
