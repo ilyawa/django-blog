@@ -13,7 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
 </head>
 <body>
-
+{#    <div class="stars"></div>#}
+<div class="stars"></div>
+<div class="overlay"></div>>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
@@ -42,7 +44,7 @@
                 <span></span>
                 Create Post
             </a>
-                <a href="{% url 'profile' %}" id="auth-links">
+                <a href="{% url 'profile' request.user.username %}" id="auth-links">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -78,61 +80,49 @@
       </nav>
 
     </header>
+
     <main role="main" class="container">
       <div class="row">
-          <div class="col-md-8">
-              {%  if messages%}
+        <div class="col-md-8">
+            {% if messages %}
                 {% for message in messages %}
-                    <div class="alert-{{ message.tags }}">
+                    <div class="alert alert-{{ message.tags }}">
                         {{ message }}
                     </div>
                 {% endfor %}
-              {% endif %}
-          </div>
+            {% endif %}
+        </div>
         <div class="col-md-8">
            {% block content %}{% endblock %}
         </div>
 
-        <div class="col-md-4">
-          <div class="content-sectionw">
-
-            <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-                <a id="list-group" style="text-decoration: none;" href="" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-                  <span class="fs-5 fw-semibold" id="gist-btn">Latest Gist</span>
-                </a>
-                <div class="list-group list-group-flush border-bottom scrollarea">
-                  <a href="" class="list-group-item list-group-item-action  lh-tight" aria-current="true">
-                    <div class="d-flex w-100 align-items-center justify-content-between">
-                      <strong class="mb-1">Здесь будут актуальные новости про дуа липу</strong>
-                      <small>Wed</small>
-                    </div>
-                    <div class="col-10 mb-1 small"></div>
-                  </a>
-                  <a href="" class="list-group-item list-group-item-action py-3 lh-tight">
-                    <div class="d-flex w-100 align-items-center justify-content-between">
-                      <strong class="mb-1">Здесь будут актуальные новости про дуа липу</strong>
-                      <small class="text-muted">Tues</small>
-                    </div>
-                    <div class="col-10 mb-1 small"></div>
-                  </a>
-                  <a href="" class="list-group-item list-group-item-action py-3 lh-tight">
-                    <div class="d-flex w-100 align-items-center justify-content-between">
-                      <strong class="mb-1">Здесь будут актуальные новости про дуа липу</strong>
-                      <small class="text-muted">Mon</small>
-                    </div>
-                    <div class="col-10 mb-1 small"></div>
-                  </a>
-
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
+{#        <div class="col-md-4">#}
+{#            <div class="content-sectionw">#}
+{#                <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">#}
+{#                    <a id="list-group" href="" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">#}
+{#                        <span class="fs-5 fw-semibold" id="gist-btn">Latest Gist</span>#}
+{#                    </a>#}
+{#                    <div class="list-group list-group-flush border-bottom scrollarea">#}
+{#                        {% for post in posts|slice:":5" %}#}
+{#                            <a href="#post_{{ post.pk }}" class="list-group-item list-group-item-action lh-tight" aria-current="true">#}
+{#                                <div class="d-flex w-100 align-items-center justify-content-between">#}
+{#                                    <strong class="mb-1">{{ post.title }}</strong>#}
+{#                                    <small>{{ post.date_posted|date:"D, P" }}</small>#}
+{#                                </div>#}
+{#                                <div class="col-10 mb-1 small">{{ post.description }}</div>#}
+{#                            </a>#}
+{#                        {% empty %}#}
+{#                            <p>Нет новостей.</p>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
 
-
-        <footer class="" >
-          <ul class="nav justify-content-center border-bottom"  style="margin-top: 60px;">
+        <footer>
+          <ul class="nav justify-content-center border-bottom">
             <li class="nav-item"><a href="{% url 'blog-home' %}" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="https://habr.com/ru/companies/selectel/articles/738942/" class="nav-link px-2 text-muted">Features</a></li>
             <li class="nav-item"><a href="{% url 'blog-about' %}" class="nav-link px-2 text-muted">About</a></li>
@@ -146,45 +136,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<!--    <script>-->
-<!--    function fetchNews() {-->
-<!--      var apiKey = '5fc9149ba54e426490db037006450ecb';-->
-<!--      var url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;-->
 
-<!--      fetch(url)-->
-<!--      .then(response => response.json())-->
-<!--      .then(data => {-->
-<!--        if (!data || !data.articles || !Array.isArray(data.articles)) {-->
-<!--          console.error('Некорректные данные:', data);-->
-<!--          return; -->
-<!--        }-->
 
-<!--        var newsContainer = document.querySelector('.scrollarea');-->
-<!--        newsContainer.innerHTML = ''; // Очистка-->
-
-<!--        data.articles.forEach(article => {-->
-<!--              var articleElement = document.createElement('a');-->
-<!--              articleElement.className = 'list-group-item list-group-item-action py-3 lh-tight';-->
-<!--              articleElement.href = article.url;-->
-<!--              articleElement.target = '_blank'; // ссылка на новость-->
-<!--              articleElement.innerHTML = `-->
-<!--                <div class="d-flex w-100 align-items-center justify-content-between">-->
-<!--                  <strong class="mb-1">${article.title}</strong>-->
-<!--                  <small class="text-muted">${new Date(article.publishedAt).toLocaleDateString('ru-RU')}</small>-->
-<!--                </div>-->
-<!--                <div class="col-10 mb-1 small">${article.description}</div>-->
-<!--              `;-->
-<!--              newsContainer.appendChild(articleElement);-->
-<!--            });-->
-<!--      })-->
-<!--      .catch(error => console.error('Ошибка при получении новостей:', error));-->
-<!--    }-->
-
-<!--    fetchNews();-->
-
-<!--    // Обновление новостей каждый час-->
-<!--    setInterval(fetchNews,   60 *   60 *   1000);-->
-<!--</script>-->
 </body>
 </html>
 
