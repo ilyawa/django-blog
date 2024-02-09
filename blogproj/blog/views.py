@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from .models import Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
+# from django.shortcuts import redirect
+# from django.contrib import messages
+# from .forms import UserUpdateForm, ProfileUpdateForm
+
 
 
 # def home(request):
@@ -11,6 +16,37 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #     }
 #     return render(request, 'blog/home.html', context)
 
+
+
+
+# def profile_update(request, username):
+#     if request.method == 'POST':
+#         user_form = UserUpdateForm(request.POST, instance=request.user)
+#         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+#
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+#             messages.success(request, 'Your profile has been updated successfully')
+#             return redirect('profile', username=request.user.username)
+#         else:
+#             messages.error(request, 'Error updating your profile')
+#     else:
+#         user_form = UserUpdateForm(instance=request.user)
+#         profile_form = ProfileUpdateForm(instance=request.user.profile)
+#
+#     context = {
+#         'user_form': user_form,
+#         'profile_form': profile_form
+#     }
+#
+#     return render(request, 'blog/profile_update.html', context)
+
+
+def profile(request, username):
+    user = User.objects.get(username=username)
+    user_posts = Post.objects.filter(author=user)
+    return render(request, 'blog/profile.html', {'user': user, 'user_posts': user_posts})
 
 def about(request):
     return render(request, 'blog/about.html', {'title': "About Page"})
@@ -66,3 +102,5 @@ class PostDeleteView(DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+

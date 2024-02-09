@@ -12,26 +12,29 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
+
+import dj_database_url # COMMENT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = "django-insecure-d*_@dvi^g6%!&dln=76=l1ok4=hl+$clzu&&^dz472z^!80r+h"
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ") # COMMENT
+# ALLOWED_HOSTS = []
 
-# Application definition
+# Application definition smth
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,9 +94,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-database_url = os.environ.get("DATABASE_URL")
+database_url = os.environ.get("DATABASE_URL") # COMMENT
+DATABASES["default"] = dj_database_url.parse(database_url) # COMMENT
 
-DATABASES["default"] = dj_database_url.parse(database_url)
+
 #DATABASES["default"] = dj_database_url.parse("postgres://dula_pipa_user:Ip76mf5E2luZ9I3RA43KsjsMnOvlawEj@dpg-cn1s3jgcmk4c73fi9t6g-a.frankfurt-postgres.render.com/dula_pipa")
 
 #postgres://dula_pipa_user:Ip76mf5E2luZ9I3RA43KsjsMnOvlawEj@dpg-cn1s3jgcmk4c73fi9t6g-a.frankfurt-postgres.render.com/dula_pipa
@@ -120,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

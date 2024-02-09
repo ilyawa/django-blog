@@ -1,20 +1,84 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-
-    {% for posts in posts %}
-
-        <article class="media content-section">
-            <img class="rounded-cirlce article-img" src="{{ posts.author.profile.image.url }}" alt="">
-            <div class="media-body">
-              <div class="article-metadata">
-                <a class="mr-2" href="#">{{ posts.author }}</a>
-                <small class="text-muted">{{ posts.date_posted }}</small>
-              </div>
-              <!--По фану-->
-              <h2><a>{{ posts.title }}</a></h2>
-              <p class="article-content">{{ posts.content }}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            {% for post in posts %}
+                <article id="post_{{ post.pk }}" class="media content-section">
+                    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <a class="mr-2" href="{% url 'profile' post.author.username %}">{{ post.author }}</a>
+                            <small class="text-muted">{{ post.date_posted }}</small>
+                        </div>
+                        <h2><a href="#post_{{ post.pk }}">{{ post.title }}</a></h2>
+                        <p class="article-content">{{ post.content }}</p>
+                    </div>
+                    <br>
+                </article>
+            {% endfor %}
+        </div>
+        <div class="col-md-1">
+            <div class="content-sectionw">
+                <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+                    <a id="list-group" href="" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                        <span class="fs-5 fw-semibold" id="gist-btn">Latest Gist</span>
+                    </a>
+                    <div class="list-group list-group-flush border-bottom scrollarea">
+                        {% for post in posts|slice:":5" %}
+                            <a href="#post_{{ post.pk }}" class="list-group-item list-group-item-action lh-tight" aria-current="true">
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <strong class="mb-1">{{ post.title }}</strong>
+                                    <small>{{ post.date_posted|date:"D, P" }}</small>
+                                </div>
+                                <div class="col-10 mb-1 small">{{ post.description }}</div>
+                            </a>
+                        {% empty %}
+                            <p>Нет новостей.</p>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            <br>
-          </article>
-    {% endfor  %}
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('load', function() {
+        document.querySelectorAll('.list-group-item').forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                var targetId = this.getAttribute('href');
+                var targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    var targetPosition = targetElement.getBoundingClientRect().top;
+                    var startPosition = window.pageYOffset;
+                    var offset =  80; // Отступ в пикселях
+                    var distance = targetPosition - startPosition - offset;
+                    var duration =  1000; // Длительность анимации в миллисекундах
+                    var startTime = null;
+
+                    function animation(currentTime) {
+                        if (startTime === null) startTime = currentTime;
+                        var timeElapsed = currentTime - startTime;
+                        var run = ease(timeElapsed, startPosition, distance, duration);
+                        window.scrollTo(0, run);
+                        if (timeElapsed < duration) requestAnimationFrame(animation);
+                    }
+
+                    function ease(t, b, c, d) {
+                        t /= d /  2;
+                        if (t <  1) return c /  2 * t * t + b;
+                        t--;
+                        return -c /  2 * (t * (t -  2) -  1) + b;
+                    }
+
+                    requestAnimationFrame(animation);
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock content %}
+
