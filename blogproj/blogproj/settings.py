@@ -34,7 +34,7 @@ DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ") # COMMENT
 # ALLOWED_HOSTS = []
 
-# Application definition
+# Application definition smth
 
 INSTALLED_APPS = [
     'django.contrib.admin',
