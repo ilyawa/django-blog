@@ -11,8 +11,6 @@ main {
     z-index: 101;
 }
 
-
-
 .stars {
     position: fixed;
     top: 0;
@@ -42,7 +40,25 @@ html {
 /*.zoom-effect {*/
 /*  animation: zoomInOut  2s linear;*/
 /*}*/
+.truncated-text .article-content {
+    max-height: 4.5em;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer; /* Измените курсор на указатель, когда навешиваете на текст */
+}
 
+.truncated-text .article-content::after {
+    content: "...";
+    position: absolute;
+    bottom:   0;
+    right:   0;
+    /*background: white;*/
+    padding:   0   10px;
+}
+.full-text .article-content {
+    max-height: none;
+    overflow: auto; /* Позволяем прокрутку, если текст превышает высоту элемента */
+}
 
 
   h2, h3, h4, h6, p {
@@ -123,9 +139,9 @@ html {
     color: white;
 }
 .content-section {
-    /*background: rgba(106, 0, 255, 0.4);*/
+    background: rgba(96, 0, 245, 0.57);
     /*backdrop-filter: blur(20px);*/
-    background: linear-gradient(270deg, rgb(98, 17, 225) 0%, rgb(34, 0, 84) 100%);
+    /*background: linear-gradient(270deg, rgb(98, 17, 225) 0%, rgb(34, 0, 84) 100%);*/
     padding: 10px 10px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -209,6 +225,7 @@ html {
     overflow: hidden;
 
 }
+
 #auth-links:hover {
     font-weight: bold;
     background: #7629ec;
@@ -221,6 +238,7 @@ html {
                 0 0 700px #681ddc;
     /*-webkit-box-reflect: below 1px linear-gradient(transparent, #0005);*/
 }
+
 /*#auth-links:nth-child(1){*/
 /*    !* filter: hue-rotate(270deg); *!*/
 /*}*/

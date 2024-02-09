@@ -45,7 +45,7 @@ from django.contrib.auth.models import User
 
 def profile(request, username):
     user = User.objects.get(username=username)
-    user_posts = Post.objects.filter(author=user)
+    user_posts = Post.objects.filter(author=user).order_by('-date_posted')
     return render(request, 'blog/profile.html', {'user': user, 'user_posts': user_posts})
 
 def about(request):
@@ -102,5 +102,8 @@ class PostDeleteView(DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+
+
 
 

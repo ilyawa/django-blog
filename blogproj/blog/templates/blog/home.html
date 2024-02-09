@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-11">
             {% for post in posts %}
-                <article id="post_{{ post.pk }}" class="media content-section">
+                <article id="post_{{ post.pk }}" class="media content-section truncated-text">
                     <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
                     <div class="media-body">
                         <div class="article-metadata">
@@ -75,6 +75,24 @@
 
                     requestAnimationFrame(animation);
                 }
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var posts = document.querySelectorAll('.limited-text');
+        posts.forEach(function(post) {
+            post.addEventListener('click', function() {
+                this.querySelector('.article-content').style.maxHeight = 'none';
+                this.querySelector('.article-content::after').style.display = 'none';
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var posts = document.querySelectorAll('.truncated-text');
+        posts.forEach(function(post) {
+            post.addEventListener('click', function() {
+                // Переключаем класс, чтобы отобразить полный текст
+                this.classList.toggle('full-text');
             });
         });
     });
