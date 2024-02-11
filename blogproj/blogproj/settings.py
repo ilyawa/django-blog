@@ -34,6 +34,8 @@ DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ") # COMMENT
 # ALLOWED_HOSTS = []
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Application definition smth
 
 INSTALLED_APPS = [
