@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm, ProfileUpdateForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from blog.models import Post
 
 
 def register(request):
@@ -19,11 +21,13 @@ def register(request):
 
 
 @login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+def profile(request, username):
+    user = User.objects.get(username=username)
+    user_posts = Post.objects.filter(author=user).order_by('-date_posted')
+    return render(request, 'users/profile.html', {'user': user, 'user_posts': user_posts})
 
 @login_required
-def profile_update(request):
+def profile_update(request, username):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
@@ -34,7 +38,7 @@ def profile_update(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('profile')
+            return redirect('profile', username=request.user.username)
 
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -45,3 +49,5 @@ def profile_update(request):
         "p_form": p_form
     }
     return render(request, 'users/profile_update.html', context)
+
+

@@ -3,21 +3,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-11">
-            {% for post in posts %}
-                <article id="post_{{ post.pk }}" class="media content-section truncated-text">
-                    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
-                    <div class="media-body">
-                        <div class="article-metadata">
-                            <a class="mr-2" href="{% url 'profile' post.author.username %}">{{ post.author }}</a>
-                            <small class="text-muted">{{ post.date_posted }}</small>
-                        </div>
-                        <h2><a href="#post_{{ post.pk }}">{{ post.title }}</a></h2>
-                        <p class="article-content">{{ post.content }}</p>
+        {% for post in posts %}
+            <article id="post_{{ post.pk }}" class="media content-section {% if post.content|length > 500 %}truncated-text{% endif %}">
+                <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="{% url 'profile' post.author.username %}">{{ post.author }}</a>
+                        <small class="text-muted">{{ post.date_posted }}</small>
                     </div>
-                    <br>
-                </article>
-            {% endfor %}
-        </div>
+                    <h2><a href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p>
+                    {% if post.content|length > 400 %}
+                        <p class="ellipsis">
+                            <img src="https://readme-typing-svg.herokuapp.com?font=Roboto&&size=40&duration=5000&pause=1000&color=FFFFFF&width=500&height=30&lines= ...;...;...;...;..." alt="Typing SVG"
+                        </p>
+                    {% endif %}
+                </div>
+                <br>
+            </article>
+        {% endfor %}
+    </div>
         <div class="col-md-1">
             <div class="content-sectionw">
                 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">

@@ -26,7 +26,7 @@
                         {{ p_form|crispy }}
                     </fieldset>
                 </form>
-                <p><button id="btn-profile"><a href="{% url 'profile-update' username=request.user.username %}" id="auth-links">
+                <p><button id="btn-profile"><a href="{% url 'profile-update' user %}" id="auth-links">
                     <span></span>
                     <span></span>
                     <span></span>

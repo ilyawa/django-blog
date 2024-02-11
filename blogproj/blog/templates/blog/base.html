@@ -44,12 +44,12 @@
                 <span></span>
                 Create Post
             </a>
-                <a href="{% url 'profile' request.user.username %}" id="auth-links">
+                <a href="{% url 'profile' request.user %}" id="auth-links">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                Profile
+                {{ request.user.username }}
             </a>
                 <a href="{% url 'logout' %}" id="auth-links">
                 <span></span>

@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 # from django.shortcuts import redirect
 # from django.contrib import messages
-# from .forms import UserUpdateForm, ProfileUpdateForm
+# from users.forms import UserUpdateForm, ProfileUpdateForm
 
 
 
@@ -19,7 +19,7 @@ from django.contrib.auth.models import User
 
 
 
-# def profile_update(request, username):
+# def profile_update(request):
 #     if request.method == 'POST':
 #         user_form = UserUpdateForm(request.POST, instance=request.user)
 #         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -43,10 +43,7 @@ from django.contrib.auth.models import User
 #     return render(request, 'blog/profile_update.html', context)
 
 
-def profile(request, username):
-    user = User.objects.get(username=username)
-    user_posts = Post.objects.filter(author=user).order_by('-date_posted')
-    return render(request, 'blog/profile.html', {'user': user, 'user_posts': user_posts})
+
 
 def about(request):
     return render(request, 'blog/about.html', {'title': "About Page"})

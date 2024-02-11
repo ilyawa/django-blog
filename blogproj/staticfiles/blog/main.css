@@ -44,20 +44,20 @@ html {
     max-height: 4.5em;
     overflow: hidden;
     position: relative;
-    cursor: pointer; /* Измените курсор на указатель, когда навешиваете на текст */
+    cursor: pointer;
+    /*overflow-x: hidden;*/
 }
 
 .truncated-text .article-content::after {
-    content: "...";
     position: absolute;
-    bottom:   0;
-    right:   0;
-    /*background: white;*/
-    padding:   0   10px;
+    bottom: 0;
+    padding: 0 0;
+    /*content: "...";*/
 }
+
 .full-text .article-content {
     max-height: none;
-    overflow: auto; /* Позволяем прокрутку, если текст превышает высоту элемента */
+    overflow: auto;
 }
 
 
@@ -166,6 +166,7 @@ html {
 
   .article-content {
     white-space: pre-line;
+    margin-right: 10px;
   }
 
   .article-img {
